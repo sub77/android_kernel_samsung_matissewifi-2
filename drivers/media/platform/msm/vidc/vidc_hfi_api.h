@@ -102,10 +102,14 @@ enum hal_extradata_id {
 	HAL_EXTRADATA_MPEG2_SEQDISP,
 	HAL_EXTRADATA_FRAME_QP,
 
+
 	HAL_EXTRADATA_FRAME_BITS_INFO,
 	HAL_EXTRADATA_LTR_INFO,
 	HAL_EXTRADATA_METADATA_MBI,
 
+
+	HAL_EXTRADATA_FRAME_BITS_INFO,
+>>>>>>> 20ad6d4... msm: vidc: Add support to request frame bits info as extra-data
 	HAL_EXTRADATA_LTR_INFO,
 
 };
