@@ -2372,12 +2372,10 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 		struct mdp_overlay_list *ovlist,
 		struct mdp_overlay *overlays)
 {
-	struct mdss_mdp_pipe *right_plist[MDSS_MDP_MAX_STAGE] = { 0 };
-	struct mdss_mdp_pipe *left_plist[MDSS_MDP_MAX_STAGE] = { 0 };
 	struct mdss_overlay_private *mdp5_data = mfd_to_mdp5_data(mfd);
 	struct mdss_mdp_pipe *pipe;
 	struct mdp_overlay *req;
-	int ret = 0, left_cnt = 0, right_cnt = 0;
+	int ret = 0;
 	int i;
 	u32 new_reqs = 0;
 
@@ -2407,27 +2405,7 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 		if (pipe->play_cnt == 0)
 			new_reqs |= pipe->ndx;
 
-		if (pipe->flags & MDSS_MDP_RIGHT_MIXER) {
-			if (right_cnt >= MDSS_MDP_MAX_STAGE) {
-				pr_err("too many pipes on right mixer\n");
-				ret = -EINVAL;
-				goto validate_exit;
-			}
-			right_plist[right_cnt] = pipe;
-			right_cnt++;
-		} else {
-			if (left_cnt >= MDSS_MDP_MAX_STAGE) {
-				pr_err("too many pipes on left mixer\n");
-				ret = -EINVAL;
-				goto validate_exit;
-			}
-			left_plist[left_cnt] = pipe;
-			left_cnt++;
-		}
 	}
-
-	//ret = mdss_mdp_perf_bw_check(mdp5_data->ctl, left_plist, left_cnt,
-	//		right_plist, right_cnt);
 
 validate_exit:
 	if (IS_ERR_VALUE(ret))
@@ -2443,17 +2421,11 @@ static int __handle_ioctl_overlay_prepare(struct msm_fb_data_type *mfd,
 		void __user *argp)
 {
 	struct mdp_overlay_list ovlist;
-	struct mdp_overlay *req_list[OVERLAY_MAX];
 	struct mdp_overlay *overlays;
 	int i, ret;
 
 	if (copy_from_user(&ovlist, argp, sizeof(ovlist)))
 		return -EFAULT;
-
-	if (ovlist.num_overlays >= OVERLAY_MAX) {
-		pr_err("Number of overlays exceeds max\n");
-		return -EINVAL;
-	}
 
 	overlays = kmalloc(ovlist.num_overlays * sizeof(*overlays), GFP_KERNEL);
 	if (!overlays) {
@@ -2461,14 +2433,8 @@ static int __handle_ioctl_overlay_prepare(struct msm_fb_data_type *mfd,
 		return -ENOMEM;
 	}
 
-	if (copy_from_user(req_list, ovlist.overlay_list,
-				sizeof(struct mdp_overlay*) * ovlist.num_overlays)) {
-		ret = -EFAULT;
-		goto validate_exit;
-	}
-
 	for (i = 0; i < ovlist.num_overlays; i++) {
-		if (copy_from_user(overlays + i, req_list[i],
+		if (copy_from_user(overlays + i, ovlist.overlay_list[i],
 				sizeof(struct mdp_overlay))) {
 			ret = -EFAULT;
 			goto validate_exit;
@@ -2478,7 +2444,7 @@ static int __handle_ioctl_overlay_prepare(struct msm_fb_data_type *mfd,
 	ret = __handle_overlay_prepare(mfd, &ovlist, overlays);
 	if (!IS_ERR_VALUE(ret)) {
 		for (i = 0; i < ovlist.num_overlays; i++) {
-			if (copy_to_user(req_list[i], overlays + i,
+			if (copy_to_user(ovlist.overlay_list[i], overlays + i,
 					sizeof(struct mdp_overlay))) {
 				ret = -EFAULT;
 				goto validate_exit;
