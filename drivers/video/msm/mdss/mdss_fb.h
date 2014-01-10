@@ -99,8 +99,7 @@ struct msm_sync_pt_data {
 	struct sw_sync_timeline *timeline;
 	int timeline_value;
 	u32 threshold;
-
-    u32 retire_threshold;
+	u32 retire_threshold;
 	atomic_t commit_cnt;
 	bool flushed;
 	bool async_wait_fences;
