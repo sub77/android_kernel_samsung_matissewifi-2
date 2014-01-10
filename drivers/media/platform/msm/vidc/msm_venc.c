@@ -945,6 +945,10 @@ static int msm_venc_queue_setup(struct vb2_queue *q,
 				*num_buffers > VIDEO_MAX_FRAME) {
 			int temp = *num_buffers;
 
+		if (*num_buffers < MIN_NUM_CAPTURE_BUFFERS ||
+				*num_buffers > VIDEO_MAX_FRAME) {
+			int temp = *num_buffers;
+
 			*num_buffers = clamp_val(*num_buffers,
 					MIN_NUM_CAPTURE_BUFFERS,
 					VIDEO_MAX_FRAME);
@@ -952,6 +956,7 @@ static int msm_venc_queue_setup(struct vb2_queue *q,
 				"Changing buffer count on CAPTURE_MPLANE from %d to %d for best effort encoding\n",
 				temp, *num_buffers);
 		}
+
 		ctrl = v4l2_ctrl_find(&inst->ctrl_handler,
 				V4L2_CID_MPEG_VIDC_VIDEO_EXTRADATA);
 		if (ctrl)
@@ -959,11 +964,13 @@ static int msm_venc_queue_setup(struct vb2_queue *q,
 		if (extradata != V4L2_MPEG_VIDC_EXTRADATA_NONE)
 			*num_planes = *num_planes + 1;
 		inst->fmts[CAPTURE_PORT]->num_planes = *num_planes;
+
 		for (i = 0; i < *num_planes; i++) {
 			sizes[i] = inst->fmts[CAPTURE_PORT]->get_frame_size(
 					i, inst->prop.height[CAPTURE_PORT],
 					inst->prop.width[CAPTURE_PORT]);
 		}
+
 		property_id = HAL_PARAM_BUFFER_COUNT_ACTUAL;
 		new_buf_count.buffer_type = HAL_BUFFER_OUTPUT;
 		new_buf_count.buffer_count_actual = *num_buffers;
