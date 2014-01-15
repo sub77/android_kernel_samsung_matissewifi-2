@@ -834,6 +834,17 @@ static struct msm_vidc_ctrl msm_venc_ctrls[] = {
 
 
 		.cluster = 0,
+	},
+	{
+		.id = V4L2_CID_MPEG_VIDC_VIDEO_HIER_P_NUM_LAYERS,
+		.name = "Set Hier P num layers",
+		.type = V4L2_CTRL_TYPE_INTEGER,
+		.minimum = 0,
+		.maximum = 3,
+		.default_value = 0,
+		.step = 1,
+		.qmenu = NULL,
+		.cluster = 0,
 	}
 };
 

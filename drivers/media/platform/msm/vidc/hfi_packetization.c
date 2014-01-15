@@ -1501,6 +1501,17 @@ int create_pkt_cmd_session_set_property(
 		break;
 	}
 	case HAL_PARAM_VENC_HIER_P_NUM_FRAMES:
+
+
+	{
+		pkt->rg_property_data[0] =
+			HFI_PROPERTY_PARAM_VENC_HIER_P_NUM_ENH_LAYER;
+		pkt->rg_property_data[1] = *(u32 *)pdata;
+		pkt->size += sizeof(u32) * 2;
+		break;
+	}
+	case HAL_PARAM_VPE_COLOR_SPACE_CONVERSION:
+>>>>>>> a525125... msm: vidc: add control to enable Hierarchical P num layers
 	{
 		pkt->rg_property_data[0] =
 			HFI_PROPERTY_PARAM_VENC_HIER_P_NUM_ENH_LAYER;

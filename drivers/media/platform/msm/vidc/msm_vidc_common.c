@@ -469,7 +469,7 @@ static void handle_session_init_done(enum command_response cmd, void *data)
 
 			inst->capability.hier_p = session_init_done->hier_p;
 
-
+			inst->capability.hier_p = session_init_done->hier_p;
 			inst->capability.pixelprocess_capabilities =
 				call_hfi_op(hdev, get_core_capabilities);
 			inst->capability.capability_set = true;
@@ -3175,12 +3175,9 @@ enum hal_extradata_id msm_comm_get_hal_extradata_index(
 		ret = HAL_EXTRADATA_FRAME_BITS_INFO;
 		break;
 
-
-
 	case V4L2_MPEG_VIDC_EXTRADATA_FRAME_BITS_INFO:
 		ret = HAL_EXTRADATA_FRAME_BITS_INFO;
 		break;
->>>>>>> 20ad6d4... msm: vidc: Add support to request frame bits info as extra-data
 	case V4L2_MPEG_VIDC_EXTRADATA_LTR:
 		ret = HAL_EXTRADATA_LTR_INFO;
 		break;

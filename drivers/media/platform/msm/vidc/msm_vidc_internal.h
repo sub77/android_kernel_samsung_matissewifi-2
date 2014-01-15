@@ -192,9 +192,13 @@ struct msm_vidc_core_capability {
 	struct hal_capability_supported scale_y;
 	struct hal_capability_supported ltr_count;
 
+
 	struct hal_capability_supported hier_p;
 
 
+
+	struct hal_capability_supported hier_p;
+>>>>>>> a525125... msm: vidc: add control to enable Hierarchical P num layers
 	u32 capability_set;
 	enum buffer_mode_type buffer_mode[MAX_PORT_NUM];
 };

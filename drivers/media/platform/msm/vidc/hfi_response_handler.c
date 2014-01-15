@@ -430,11 +430,17 @@ static inline void copy_cap_prop(
 		break;
 
 
+
 	case HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS:
 		out = &sess_init_done->hier_p;
 		break;
 
 
+
+	case HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS:
+		out = &sess_init_done->hier_p;
+		break;
+>>>>>>> a525125... msm: vidc: add control to enable Hierarchical P num layers
 	}
 
 	if (out) {
