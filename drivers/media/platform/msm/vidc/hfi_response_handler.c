@@ -429,9 +429,12 @@ static inline void copy_cap_prop(
 		out = &sess_init_done->ltr_count;
 		break;
 
+
 	case HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS:
 		out = &sess_init_done->hier_p;
 		break;
+
+
 	}
 
 	if (out) {

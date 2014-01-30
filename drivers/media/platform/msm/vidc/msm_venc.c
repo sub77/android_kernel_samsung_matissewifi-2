@@ -819,6 +819,7 @@ static struct msm_vidc_ctrl msm_venc_ctrls[] = {
 		.default_value = 0,
 		.step = 1,
 		.qmenu = NULL,
+
 		.cluster = 0,
 	},
 	{
@@ -830,6 +831,8 @@ static struct msm_vidc_ctrl msm_venc_ctrls[] = {
 		.default_value = 0,
 		.step = 1,
 		.qmenu = NULL,
+
+
 		.cluster = 0,
 	}
 };

@@ -200,7 +200,10 @@ enum msm_vidc_extradata_type {
 	EXTRADATA_ASPECT_RATIO = 0x7F100003,
 	EXTRADATA_METADATA_FILLER = 0x7FE00002,
 	MSM_VIDC_EXTRADATA_METADATA_LTR = 0x7F100004,
+<<<<<<< HEAD
 	EXTRADATA_METADATA_MBI = 0x7F100005,
+=======
+>>>>>>> 491bff9... msm: vidc: Add generic LTR mode support
 };
 enum msm_vidc_interlace_type {
 	INTERLACE_FRAME_PROGRESSIVE = 0x01,
