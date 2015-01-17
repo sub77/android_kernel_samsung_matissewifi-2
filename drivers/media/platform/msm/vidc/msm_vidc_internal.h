@@ -31,8 +31,6 @@
 #include <media/videobuf2-core.h>
 #include <media/msm_vidc.h>
 #include <media/msm_media_info.h>
-
-#include "vidc_hfi_api.h"
 #include "vidc_hfi_api.h"
 
 #define MSM_VIDC_DRV_NAME "msm_vidc_driver"
@@ -45,11 +43,7 @@
 #define MIN_SUPPORTED_HEIGHT 32
 #define MAX_SUPPORTED_WIDTH 3820
 #define MAX_SUPPORTED_HEIGHT 2160
-
-
-
 #define V4L2_EVENT_VIDC_BASE  10
-
 #define SYS_MSG_START VIDC_EVENT_CHANGE
 #define SYS_MSG_END SYS_DEBUG
 #define SESSION_MSG_START SESSION_LOAD_RESOURCE_DONE

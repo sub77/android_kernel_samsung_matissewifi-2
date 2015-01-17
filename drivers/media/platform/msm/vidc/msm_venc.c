@@ -999,9 +999,6 @@ static int msm_venc_queue_setup(struct vb2_queue *q,
 			*num_buffers = buff_req->buffer_count_actual =
 			max(*num_buffers, buff_req->buffer_count_actual);
 		}
-		if (*num_buffers < MIN_NUM_CAPTURE_BUFFERS ||
-				*num_buffers > VIDEO_MAX_FRAME) {
-			int temp = *num_buffers;
 
 		if (*num_buffers < MIN_NUM_CAPTURE_BUFFERS ||
 				*num_buffers > VIDEO_MAX_FRAME) {

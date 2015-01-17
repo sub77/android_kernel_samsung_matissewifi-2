@@ -27,7 +27,6 @@
 #include "msm_vidc_internal.h"
 #include "msm_vidc_debug.h"
 #include "vidc_hfi_api.h"
-#include "vidc_hfi_api.h"
 #include "msm_vidc_resources.h"
 #include "msm_vidc_res_parse.h"
 

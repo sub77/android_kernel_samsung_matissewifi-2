@@ -357,11 +357,6 @@ static int get_hfi_extradata_index(enum hal_extradata_id index)
 	case HAL_EXTRADATA_FRAME_QP:
 		ret = HFI_PROPERTY_PARAM_VDEC_FRAME_QP_EXTRADATA;
 		break;
-
-	case HAL_EXTRADATA_FRAME_BITS_INFO:
-		ret = HFI_PROPERTY_PARAM_VDEC_FRAME_BITS_INFO_EXTRADATA;
-		break;
-
 	case HAL_EXTRADATA_FRAME_BITS_INFO:
 		ret = HFI_PROPERTY_PARAM_VDEC_FRAME_BITS_INFO_EXTRADATA;
 		break;
@@ -1441,22 +1436,6 @@ int create_pkt_cmd_session_set_property(
 		pkt->size += sizeof(u32) + sizeof(struct hfi_enable);
 		break;
 	}
-	case HAL_PARAM_VPE_COLOR_SPACE_CONVERSION:
-	{
-		struct hfi_vpe_color_space_conversion *hfi = NULL;
-		struct hal_vpe_color_space_conversion *hal = pdata;
-		pkt->rg_property_data[0] =
-				HFI_PROPERTY_PARAM_VPE_COLOR_SPACE_CONVERSION;
-		hfi = (struct hfi_vpe_color_space_conversion *)
-			&pkt->rg_property_data[1];
-		*hfi = *(struct hfi_vpe_color_space_conversion *) hal;
-		pkt->size += sizeof(u32) +
-				sizeof(struct hal_vpe_color_space_conversion);
-
-		dprintk(VIDC_DBG, "%s HAL_PARAM_VPE_COLOR_SPACE_CONVERSION\n",
-				__func__);
-		break;
-	}
 	case HAL_PARAM_VENC_LTRMODE:
 	{
 		struct hfi_ltrmode *hfi;
@@ -1498,8 +1477,6 @@ int create_pkt_cmd_session_set_property(
 		break;
 	}
 	case HAL_PARAM_VENC_HIER_P_NUM_FRAMES:
-
-
 	{
 		pkt->rg_property_data[0] =
 			HFI_PROPERTY_PARAM_VENC_HIER_P_NUM_ENH_LAYER;
@@ -1508,12 +1485,19 @@ int create_pkt_cmd_session_set_property(
 		break;
 	}
 	case HAL_PARAM_VPE_COLOR_SPACE_CONVERSION:
->>>>>>> a525125... msm: vidc: add control to enable Hierarchical P num layers
 	{
+		struct hfi_vpe_color_space_conversion *hfi = NULL;
+		struct hal_vpe_color_space_conversion *hal = pdata;
 		pkt->rg_property_data[0] =
-			HFI_PROPERTY_PARAM_VENC_HIER_P_NUM_ENH_LAYER;
-		pkt->rg_property_data[1] = *(u32 *)pdata;
-		pkt->size += sizeof(u32) * 2;
+				HFI_PROPERTY_PARAM_VPE_COLOR_SPACE_CONVERSION;
+		hfi = (struct hfi_vpe_color_space_conversion *)
+			&pkt->rg_property_data[1];
+		*hfi = *(struct hfi_vpe_color_space_conversion *) hal;
+		pkt->size += sizeof(u32) +
+				sizeof(struct hal_vpe_color_space_conversion);
+
+		dprintk(VIDC_DBG, "%s HAL_PARAM_VPE_COLOR_SPACE_CONVERSION\n",
+				__func__);
 		break;
 	}
 	case HAL_PARAM_VENC_ENABLE_INITIAL_QP:
