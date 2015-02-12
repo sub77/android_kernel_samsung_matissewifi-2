@@ -12,7 +12,7 @@
 
 /include/ "dsi_panel_sharp_720p_video.dtsi"
 /include/ "msm8226-camera-sensor-mtp-r01.dtsi"
-/include/ "msm8226-tsu6721.dtsi"
+/include/ "msm8226-sm5502.dtsi"
 
 &spmi_bus {
 	qcom,pm8226@1 {
@@ -141,29 +141,28 @@
 		};
 	};
 
-	i2c@f9927000 { /* BLSP1 QUP5 */
+	i2c@f9927000{ /* BLSP1 QUP5 Hardware ID BLSP5 */
 		compatible = "qcom,i2c-qup";
 		qcom,scl-gpio = <&msmgpio 19 0>;
 		qcom,sda-gpio = <&msmgpio 18 0>;
-		touchcontroller@67 {
-			compatible = "bcmtch15xxx";
-			reg = <0x67>;
-			addr-sys = <0x68>;
-			interrupt-parent = <&msmgpio>;
-			interrupts = <17 0x2>;
-
-			/*reset-gpios = <&gpio 126 0>;
-			reset-time-ms = <100>;
-			axis-orientation-flag = <0x2>;
-			regulator consumer
-			avdd33-supply = <&tsp_reg>;*/
-
-			vddo-supply = <&pm8226_lvs1>;
-
-			/*avdd_adldo-supply = <&tsp_reg>;*/
-
-			ext-button-count = <2>;
-			ext-button-map = <139 158>;
+		atmel_mxt_1188s@4a {
+				compatible = "atmel,mxts-ts";
+				reg = <0x4a>; /*slave address*/
+				interrupt-parent = <&msmgpio>;
+				interrupts = <17 0>; /* Touch int gpio */
+				mxts,tsppwr_en = <&msmgpio 31 0x1>;
+				mxts,tsppwr_en1 = <&msmgpio 73 0x1>;
+				mxts,vendor1 = <&msmgpio 55 0x1>;
+				/*vcc_en-supply = <&pm8941_l10>;*/
+				mxts,irq-gpio = <&msmgpio 17 0x00>; /*TSP IRQ GPIO */
+				mxts,rst = <&pm8226_gpios 6 0x1>;
+				mxts,i2c-pull-up = <1>;
+				mxts,num_x = <27>; /*num of x-node*/
+				mxts,num_y = <44>; /*num of y node*/
+				mxts,max_x = <4095>; /*max x*/
+				mxts,max_y = <4095>; /*max y*/
+				mxts,tsp_coord = <27 44 4095 4095>;
+				mxts,pname = "SM-T530"; /*Matisse SM-T530*/
 		};
 /*		zinitix_touch@20 {
 				compatible = "zinitix,zinitix_touch";
