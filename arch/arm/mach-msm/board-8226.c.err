@@ -71,11 +71,6 @@
 #include <mach/msm8x26-thermistor.h>
 #endif
 
-#ifdef CONFIG_KEXEC_HARDBOOT
-#include <asm/kexec.h>
-#endif
-
-
 #ifdef CONFIG_SENSORS_SSP
 extern int poweroff_charging;
 static struct regulator *vsensor_2p85, *vsensor_1p8;
@@ -127,11 +122,11 @@ static struct persistent_ram_descriptor per_ram_descs[] __initdata = {
        {
                .name = "ram_console",
 #ifdef CONFIG_KEXEC_HARDBOOT
- .size = KEXEC_HB_PAGE_ADDR - RAMCONSOLE_PHYS_ADDR,
- },
- {
- .name = "kexec_hb_page",
- .size = SZ_1M - (KEXEC_HB_PAGE_ADDR - RAMCONSOLE_PHYS_ADDR),
+               .size = KEXEC_HB_PAGE_ADDR - RAMCONSOLE_PHYS_ADDR,
+       },
+       {
+               .name = "kexec_hb_page",
+               .size = SZ_1M - (KEXEC_HB_PAGE_ADDR - RAMCONSOLE_PHYS_ADDR),
 #else
                .size = SZ_1M,
 #endif
@@ -215,6 +210,10 @@ void __init msm8226_add_drivers(void)
     defined(CONFIG_SEC_HESTIA_PROJECT) || defined(CONFIG_SEC_GNOTE_PROJECT) || defined(CONFIG_SEC_ATLANTIC_PROJECT) || \
 	defined(CONFIG_SEC_DEGAS_PROJECT) || defined(CONFIG_SEC_T10_PROJECT) || defined(CONFIG_SEC_T8_PROJECT) || defined(CONFIG_SEC_MEGA2_PROJECT) || \
 	defined(CONFIG_SEC_MS01_PROJECT)
+#ifdef CONFIG_KEXEC_HARDBOOT
+#include <asm/kexec.h>
+#endif
+
 #ifdef CONFIG_SEC_THERMISTOR
 	platform_device_register(&sec_device_thermistor);
 #endif
