@@ -9,6 +9,9 @@
 #if defined(CONFIG_ARCH_MSM8960) || defined(CONFIG_ARCH_APQ8064)
 #include <mach/msm_iomap.h>
 #endif
+#if defined(CONFIG_ARCH_MSM8226) || defined(CONFIG_ARCH_APQ8026)
+#include <mach/msm_iomap.h>
+#endif
 #endif
 
 	.globl relocate_new_kernel
@@ -89,11 +92,11 @@ hardboot:
 	ldr	r1, =KEXEC_HB_PAGE_MAGIC
 	str	r1, [r0]
 
-#if defined(CONFIG_ARCH_MSM8960) || defined(CONFIG_ARCH_APQ8064)
-#if defined(CONFIG_ARCH_APQ8064)
-#define MSM_TLMM_PHYS APQ8064_TLMM_PHYS
-#elif defined(CONFIG_ARCH_MSM8960)
-#define MSM_TLMM_PHYS MSM8960_TLMM_PHYS
+#if defined(CONFIG_ARCH_MSM8226) || defined(CONFIG_ARCH_APQ8026)
+#if defined(CONFIG_ARCH_APQ8026)
+#define MSM_TLMM_PHYS APQ8026_TLMM_PHYS
+#elif defined(CONFIG_ARCH_MSM8226)
+#define MSM_TLMM_PHYS MSM8226_TLMM_PHYS
 #endif
 	/* Hard reset via PMIC, decompressor jumps to kernel. */
 	ldr	r0, =MSM_TLMM_PHYS
