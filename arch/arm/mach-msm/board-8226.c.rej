@@ -1,0 +1,13 @@
+--- arch/arm/mach-msm/board-jf_att.c
++++ arch/arm/mach-msm/board-jf_att.c
+@@ -150,6 +150,10 @@
+ #include <mach/fusion3-thermistor.h>
+ #endif
+ 
++#ifdef CONFIG_KEXEC_HARDBOOT
++#include <asm/kexec.h>
++#endif
++
+ #if defined(CONFIG_SENSORS_SSP)
+ enum {
+ 	SNS_PWR_OFF,
